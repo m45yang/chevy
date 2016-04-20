@@ -1,0 +1,24 @@
+{
+  "name": "budgetbot",
+  "version": "1.0.0",
+  "description": "A messenger bot that helps you with your weekly budget.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m45yang/budgetbot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m45yang/budgetbot/issues"
+  },
+  "homepage": "https://github.com/m45yang/budgetbot#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "request": "^2.72.0"
+  }
+}
