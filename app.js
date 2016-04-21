@@ -36,8 +36,7 @@ function sendTextMessage(sender, text) {
         } else if (response.body.error) {
             console.log('Error: ', response.body.error)
         }
-        console.log('Response: ', response)
-        console.log('Body: ', body)
+        console.log('Successful POST to Facebook API')
     })
 }
 
