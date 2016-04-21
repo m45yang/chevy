@@ -16,6 +16,8 @@ app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot')
 })
 
+var token = "CAARZAXuMIOewBAJo3VjIFfUOpuck1IW5AEymxMzrMkXNjMRsIlVR4wBhqibvh1M1xvOhxFcrR6C35yShzxzhyRRqrAo4hLzsrdXDuneRKeSRLPggL8BDMk0QIRO9OAIHtz1qOVrSRVxX4ji6j1e4SZC7CE2qE3YiwVjWNNb13sJFOLpsLk4WYzZCyrGLGgZD"
+
 function sendTextMessage(sender, text) {
     messageData = {
         text:text
@@ -54,5 +56,3 @@ app.get('/webhook/', function (req, res) {
 app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
-
-var token = "CAARZAXuMIOewBAJo3VjIFfUOpuck1IW5AEymxMzrMkXNjMRsIlVR4wBhqibvh1M1xvOhxFcrR6C35yShzxzhyRRqrAo4hLzsrdXDuneRKeSRLPggL8BDMk0QIRO9OAIHtz1qOVrSRVxX4ji6j1e4SZC7CE2qE3YiwVjWNNb13sJFOLpsLk4WYzZCyrGLGgZD"
