@@ -36,6 +36,8 @@ function sendTextMessage(sender, text) {
         } else if (response.body.error) {
             console.log('Error: ', response.body.error)
         }
+        console.log('Response: ', response)
+        console.log('Body: ', body)
     })
 }
 
@@ -43,7 +45,9 @@ app.post('/webhook/', function (req, res) {
     messaging_events = req.body.entry[0].messaging
     for (i = 0; i < messaging_events.length; i++) {
         event = req.body.entry[0].messaging[i]
+        console.log('Event: ', event)
         sender = event.sender.id
+        console.log('Sender id: ', sender)
         if (event.message && event.message.text) {
             text = event.message.text
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
