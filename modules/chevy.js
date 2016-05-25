@@ -1,6 +1,6 @@
 'use strict'
 
-import request from 'request'
+var request = require('request')
 
 export default class Chevy {
   constructor() {
