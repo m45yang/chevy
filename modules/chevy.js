@@ -2,7 +2,7 @@
 
 var request = require('request')
 
-export default class Chevy {
+class Chevy {
   constructor() {
     this.name = "Chevy"
     this.accessToken = "CAARZAXuMIOewBAJo3VjIFfUOpuck1IW5AEymxMzrMkXNjMRsIlVR4wBhqibvh1M1xvOhxFcrR6C35yShzxzhyRRqrAo4hLzsrdXDuneRKeSRLPggL8BDMk0QIRO9OAIHtz1qOVrSRVxX4ji6j1e4SZC7CE2qE3YiwVjWNNb13sJFOLpsLk4WYzZCyrGLGgZD"
@@ -28,5 +28,7 @@ export default class Chevy {
         }
         console.log('Successful POST to Facebook API')
     })
+  }
 }
-}
+
+module.exports = new Chevy();
