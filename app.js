@@ -40,19 +40,26 @@ function sendTextMessage(sender, text) {
     })
 }
 
-app.post('/webhook/', function (req, res) {
-    messaging_events = req.body.entry[0].messaging
-    for (i = 0; i < messaging_events.length; i++) {
-        event = req.body.entry[0].messaging[i]
-        console.log('Event: ', event)
-        sender = event.sender.id
-        console.log('Sender id: ', sender)
-        if (event.message && event.message.text) {
-            text = event.message.text
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-        }
+// app.post('/webhook/', function (req, res) {
+//     messaging_events = req.body.entry[0].messaging
+//     for (i = 0; i < messaging_events.length; i++) {
+//         event = req.body.entry[0].messaging[i]
+//         console.log('Event: ', event)
+//         sender = event.sender.id
+//         console.log('Sender id: ', sender)
+//         if (event.message && event.message.text) {
+//             text = event.message.text
+//             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+//         }
+//     }
+//     res.sendStatus(200)
+// })
+
+app.get('/webhook/', function (req, res) {
+    if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+        res.send(req.query['hub.challenge'])
     }
-    res.sendStatus(200)
+    res.send('Error, wrong token')
 })
 
 // Spin up the server
