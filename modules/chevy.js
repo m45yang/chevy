@@ -1,6 +1,7 @@
 'use strict'
 
 var request = require('request')
+var natural = require('natural')
 
 class Chevy {
   constructor() {
