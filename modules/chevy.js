@@ -6,7 +6,7 @@ var natural = require('natural')
 class Chevy {
   constructor() {
     this.name = "Chevy"
-    this.accessToken = "CAARZAXuMIOewBAJo3VjIFfUOpuck1IW5AEymxMzrMkXNjMRsIlVR4wBhqibvh1M1xvOhxFcrR6C35yShzxzhyRRqrAo4hLzsrdXDuneRKeSRLPggL8BDMk0QIRO9OAIHtz1qOVrSRVxX4ji6j1e4SZC7CE2qE3YiwVjWNNb13sJFOLpsLk4WYzZCyrGLGgZD"
+    this.accessToken = "EAAV2U0FJIDIBAIYMoyqXYZAm1H5mzDdln4QElKzB9hCDm6iZBofwJh9ZBe6OwYT0nxHDqCDSFW4DKNQtMFEIcUXHZA1DSUxVZCZAcv1yTHKFAY0YQSVrmW7xpOLqXHScUxE1efZBm77bTintyw79i50iT9gvN4fsnmHMAey3vMv0QZDZD"
 
     // Regular expressions
     this.regex = {
@@ -18,22 +18,22 @@ class Chevy {
   // Replies the sender with text
   sendMessage(sender, text) {
     var messageData = {
-        text:text
+      text:text
     }
     request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token : this.accessToken },
-        method: 'POST',
-        json: {
-            recipient: { id : sender },
-            message: messageData,
-        }
+      url: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: { access_token : this.accessToken },
+      method: 'POST',
+      json: {
+          recipient: { id : sender },
+          message: messageData,
+      }
     },
     function(error, response, body) {
       if (error) {
-          console.log('Error sending messages: ', error)
+        console.log('Error sending messages: ', error)
       } else if (response.body.error) {
-          console.log('Error: ', response.body.error)
+        console.log('Error: ', response.body.error)
       }
       console.log('Successful POST to Facebook API')
     })
