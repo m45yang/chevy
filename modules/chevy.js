@@ -1,25 +1,29 @@
 'use strict'
 
 var request = require('request')
-var natural = require('natural')
+var conversation = require('./conversation')
 
 class Chevy {
   constructor() {
     this.name = "Chevy"
-    this.accessToken = "EAAV2U0FJIDIBAIYMoyqXYZAm1H5mzDdln4QElKzB9hCDm6iZBofwJh9ZBe6OwYT0nxHDqCDSFW4DKNQtMFEIcUXHZA1DSUxVZCZAcv1yTHKFAY0YQSVrmW7xpOLqXHScUxE1efZBm77bTintyw79i50iT9gvN4fsnmHMAey3vMv0QZDZD"
-
-    // Regular expressions
-    this.regex = {
-      RIDE : /carpool|ride/i,
-      DAY  : /today|tomorrow|tonight|tomorrow night/i
-    }
+    this.accessToken = "EAAV2U0FJIDIBAFJ4RZANJuW9ILWY1z6cLZAR7NIue64LRxyNMYiVowrKm6xC4ZBzk6d3E2gH9Ca1ezf0ZCNUpMHaPFUfUv6d7uw0SmIQA56jSszf0fAIyZAVX5DqZBBRZAZBk9mKuwvhqVgz5Obs5gq7HzvkzcyVr0T6lSGsQSqSGwZDZD"
   }
 
-  // Replies the sender with text
-  sendMessage(sender, text) {
-    var messageData = {
-      text:text
+  /**
+   * Replies the sender, each response has a delay of 300ms
+   * @param  {id}    sender  [id of Facebook user to reply]
+   * @param  {array} text    [array containing all the needed replies]
+   */
+  reply(sender, replies) {
+    if (replies.length === 0) {
+      return
     }
+
+    var reply = replies.shift()
+    var messageData = {
+      text: reply
+    }
+
     request({
       url: 'https://graph.facebook.com/v2.6/me/messages',
       qs: { access_token : this.accessToken },
@@ -37,31 +41,15 @@ class Chevy {
       }
       console.log('Successful POST to Facebook API')
     })
+
+    setTimeout(this.reply(sender, replies), 300)
   }
 
-  think(text) {
-    // Default response
-    var stupidResponse = "Guess you're walking"
-    var response = "Hi, I am " + this.name + "!"
-    var time
-    var day
-    var origin
-    var destination
-
-    if (this.regex.RIDE.test(text)) {
-      response = "Sure, I can help you find a carpool"
-      day = text.match(this.regex.DAY) || '';
-
-      if (day !== '') {
-        response += ' ' + day;
-      } else if (text.match(/yesterday/i)) {
-        response = stupidResponse
-      }
-
-      response += "!"
+  think(context) {
+    context = conversation.parse(context)
+    if (context.replies.length === 0) {
+      context.replies.push('Sorry, I am still learning and I am not quite sure what you meant!')
     }
-
-    return response
   }
 }
 

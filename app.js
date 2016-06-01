@@ -21,16 +21,27 @@ app.get('/', function (req, res) {
 })
 
 app.post('/webhook/', function (req, res) {
+  var context = {
+    query: '',
+    postback: null,
+    completed: false,
+    replies: []
+  }
+
   var messaging_events = req.body.entry[0].messaging
   for (var i = 0; i < messaging_events.length; i++) {
-      var event = req.body.entry[0].messaging[i]
-      var sender = event.sender.id
-      if (event.message && event.message.text) {
-          var text = event.message.text
-          var response = Chevy.think(text)
-          Chevy.sendMessage(sender, response.substring(0, 200))
-      }
+    var event = req.body.entry[0].messaging[i]
+    var sender = event.sender.id
+    if (event.message && event.message.text) {
+      context.query = event.message.text
+      Chevy.think(context)
+    } else if (event.postback && event.postback.payload) {
+      context.postback = event.postback
+      Chevy.think(context)
+    }
   }
+  console.log('context: ', context)
+  Chevy.reply(sender, context.replies)
   res.sendStatus(200)
 })
 
