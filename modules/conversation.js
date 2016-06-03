@@ -18,14 +18,11 @@ class Conversation {
     var query = context.query
     var tokens = this.tokenizer.tokenize(query)
 
-    console.log('tokens: ', tokens)
-    console.log('greetings: ', dictionary.greetings)
-
     for(var i=0; i<tokens.length; i++) {
-      if (dictionary.greetings.indexOf(tokens[i]) > -1) {
-        context.replies.push(ArrayUtils.random_element(['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']));
-        context.replies.push('Prompt for carpool goes here');
-        break;
+      if (ArrayUtils.string_match(dictionary.greetings, tokens[i])) {
+        context.replies.push(ArrayUtils.random_element(['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']))
+        context.replies.push('Prompt for carpool goes here')
+        break
       }
     }
 

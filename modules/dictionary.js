@@ -1,8 +1,7 @@
 var dictionary = {
   greetings: [
-    'hello', 'yo', 'whatsup',
-    'hey',
-    'hi'
+    'hello', 'yo', 'whats up',
+    'hey','hi'
   ]
 }
 

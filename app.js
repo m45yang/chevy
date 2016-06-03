@@ -40,7 +40,6 @@ app.post('/webhook/', function (req, res) {
       Chevy.think(context)
     }
   }
-  console.log('context: ', context)
   Chevy.reply(sender, context.replies)
   res.sendStatus(200)
 })
