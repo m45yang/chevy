@@ -14,6 +14,12 @@ class Conversation {
     this.tokenizer = new natural.WordTokenizer()
   }
 
+  /**
+   * Parses the context object for any potential conversation
+   * keywords and adds the appropriate replies
+   * @param  {[object]} context
+   * @return {[object]} context
+   */
   parse(context) {
     var query = context.query
     var tokens = this.tokenizer.tokenize(query)
