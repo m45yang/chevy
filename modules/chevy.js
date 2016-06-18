@@ -1,13 +1,16 @@
 'use strict'
 
 var request = require('request-promise')
-var conversation = require('./conversation')
+var natural = require('natural')
 var Promise = require('bluebird')
+var conversation = require('./plugins/conversation')
+var search = require('./plugins/search')
 
 class Chevy {
   constructor() {
     this.name = "Chevy"
     this.accessToken = "EAAV2U0FJIDIBAFJ4RZANJuW9ILWY1z6cLZAR7NIue64LRxyNMYiVowrKm6xC4ZBzk6d3E2gH9Ca1ezf0ZCNUpMHaPFUfUv6d7uw0SmIQA56jSszf0fAIyZAVX5DqZBBRZAZBk9mKuwvhqVgz5Obs5gq7HzvkzcyVr0T6lSGsQSqSGwZDZD"
+    this.tokenizer = new natural.WordTokenizer()
   }
 
   /**
@@ -32,11 +35,8 @@ class Chevy {
         if (error) {
           console.log('Error sending messages: ', error)
           return Promise.reject(error)
-        } else if (response.body.error) {
-          console.log('Error: ', response.body.error)
-          return Promise.reject(response.body.error)
         }
-      })
+      });
     }, Promise.resolve())
   }
 
@@ -67,7 +67,12 @@ class Chevy {
    * @return {[null]}
    */
   think(context) {
+    context.queryTokens = this.tokenizer.tokenize(context.query)
+
+    // TODO: figure out a better way to run all plugins
     context = conversation.parse(context)
+    context = search.parse(context)
+
     if (context.replies.length === 0) {
       context.replies.push('Sorry, I am still learning and I am not quite sure what you meant!')
     }

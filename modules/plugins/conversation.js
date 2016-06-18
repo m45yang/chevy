@@ -1,8 +1,7 @@
 'use strict'
 
-var natural = require('natural')
-var dictionary = require('./dictionary')
-var ArrayUtils = require('../array-utils')
+var dictionary = require('../dictionary')
+var ArrayUtils = require('../../array-utils')
 
 /**
  * Conversation class
@@ -10,10 +9,6 @@ var ArrayUtils = require('../array-utils')
  */
 
 class Conversation {
-  constructor() {
-    this.tokenizer = new natural.WordTokenizer()
-  }
-
   /**
    * Parses the context object for any potential conversation
    * keywords and adds the appropriate replies
@@ -21,8 +16,7 @@ class Conversation {
    * @return {[object]} context
    */
   parse(context) {
-    var query = context.query
-    var tokens = this.tokenizer.tokenize(query)
+    var tokens = context.queryTokens
 
     for(var i=0; i<tokens.length; i++) {
       if (ArrayUtils.string_match(dictionary.greetings, tokens[i])) {

@@ -1,7 +1,7 @@
 'use strict'
 
 var natural = require('natural')
-var MIN_MATCH_THRESHOLD = 0.75
+var MIN_MATCH_THRESHOLD = 0.8
 
 /**
  * Class containing useful functions for arrays
@@ -36,6 +36,48 @@ class ArrayUtils {
     })
 
     return match
+  }
+
+  /**
+   * Currently a very dumb function to find the origin of a
+   * carpool search query
+   * Finds the word after the keyword 'from' and assumes that
+   * to be the origin
+   * @param  {[array]}  wordlist
+   * @return {[string]} origin
+   */
+  getOrigin(wordlist) {
+    var keyword = 'from'
+    var origin = ''
+
+    wordlist.forEach(function(element, index, wordlist) {
+      if (element === keyword) {
+        origin = wordlist[index + 1]
+      }
+    })
+
+    return origin
+  }
+
+  /**
+   * Currently a very dumb function to find the destination of a
+   * carpool search query
+   * Finds the word after the keyword 'from' and assumes that
+   * to be the origin
+   * @param  {[array]}  wordlist
+   * @return {[string]} origin
+   */
+  getDestination(wordlist) {
+    var keyword = 'to'
+    var origin = ''
+
+    wordlist.forEach(function(element, index, wordlist) {
+      if (element === keyword) {
+        origin = wordlist[index + 1]
+      }
+    })
+
+    return origin
   }
 }
 
