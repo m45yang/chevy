@@ -15,8 +15,16 @@ var parse = function(context) {
   if (actions.indexOf('search') > -1) {
     rideSearch(context.origin, context.destination)
   }
-
-  return context
+  else if (actions.indexOf('requestOrigin') > -1) {
+    context.replies.push('Please enter an origin')
+  }
+  else if (actions.indexOf('requestDestination') > -1) {
+    context.replies.push('Please enter a destination')
+  }
+  else if (actions.indexOf('greet') > -1) {
+    var greetings = ['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']
+    context.replies.push(Util.random_element(greetings))
+  }
 }
 
 /**

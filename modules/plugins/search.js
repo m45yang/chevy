@@ -22,11 +22,14 @@ var parse = function(context) {
         context.actions.push('search')
         context.origin = origin
         context.destination = destination
-      } else if (origin === '') {
+      }
+      else if (origin === '') {
         context.actions.push('requestOrigin')
-      } else if (destination == '') {
+      }
+      else if (destination == '') {
         context.actions.push('requestDestination')
-      } else {
+      }
+      else {
         context.actions.push('requestOriginAndDestination')
       }
     }
