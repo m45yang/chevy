@@ -25,13 +25,13 @@ class Search {
         origin = ArrayUtils.getOrigin(tokens)
         destination = ArrayUtils.getDestination(tokens)
         if (origin !== '' && destination !== '') {
-          context.replies.push('Here are some rides you can take from ' + origin + ' to ' + destination + '!')
+          context.actions.push = 'search'
         } else if (origin === '') {
-          context.replies.push('Origin missing')
+          context.actions.push = 'requestOrigin'
         } else if (destination == '') {
-          context.replies.push('Destination missing')
+          context.actions.push = 'requestDestination'
         } else {
-          context.replies.push('Origin and destination missing')
+          context.actions.push = 'requestOriginAndDestination'
         }
         break
       }

@@ -20,8 +20,9 @@ class Conversation {
 
     for(var i=0; i<tokens.length; i++) {
       if (ArrayUtils.string_match(dictionary.greetings, tokens[i])) {
-        context.replies.push(ArrayUtils.random_element(['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']))
-        context.replies.push('Prompt for carpool goes here')
+        context.actions.push = 'greet'
+        // context.replies.push(ArrayUtils.random_element(['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']))
+        // context.replies.push('Prompt for carpool goes here')
         break
       }
     }
