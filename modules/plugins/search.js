@@ -1,7 +1,7 @@
 'use strict'
 
 var dictionary = require('../dictionary')
-var ArrayUtils = require('../../array-utils')
+var Util = require('../../utils')
 
 /**
  * Carpool search class
@@ -16,28 +16,34 @@ class Search {
    * @return {[object]} context
    */
   parse(context) {
-    var tokens = context.queryTokens
-    var origin = ''
-    var destination = ''
+    return new Promise(function(resolve, reject) {
+      var tokens = context.queryTokens
+      var origin = ''
+      var destination = ''
 
-    for(var i=0; i<tokens.length; i++) {
-      if (ArrayUtils.string_match(dictionary.search, tokens[i])) {
-        origin = ArrayUtils.getOrigin(tokens)
-        destination = ArrayUtils.getDestination(tokens)
-        if (origin !== '' && destination !== '') {
-          context.replies.push('Here are some rides you can take from ' + origin + ' to ' + destination + '!')
-        } else if (origin === '') {
-          context.replies.push('Origin missing')
-        } else if (destination == '') {
-          context.replies.push('Destination missing')
-        } else {
-          context.replies.push('Origin and destination missing')
+      for(var i=0; i<tokens.length; i++) {
+        if (Util.string_match(dictionary.search, tokens[i])) {
+          origin = Util.getOrigin(tokens)
+          destination = Util.getDestination(tokens)
+
+          if (origin !== '' && destination !== '') {
+            context.replies.push('Here are some rides you can take from ' + origin + ' to ' + destination + '!')
+          }
+          else if (origin === '') {
+            context.replies.push('Origin missing')
+          }
+          else if (destination == '') {
+            context.replies.push('Destination missing')
+          }
+          else {
+            context.replies.push('Origin and destination missing')
+          }
+          break
         }
-        break
       }
-    }
 
-    return context
+      return resolve(context)
+    })
   }
 
   /**

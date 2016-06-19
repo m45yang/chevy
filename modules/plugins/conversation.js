@@ -1,7 +1,8 @@
 'use strict'
 
+var Promise = require('bluebird')
 var dictionary = require('../dictionary')
-var ArrayUtils = require('../../array-utils')
+var Util = require('../../utils')
 
 /**
  * Conversation class
@@ -9,6 +10,10 @@ var ArrayUtils = require('../../array-utils')
  */
 
 class Conversation {
+  constructor() {
+    this.replies = ['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']
+  }
+
   /**
    * Parses the context object for any potential conversation
    * keywords and adds the appropriate replies
@@ -16,17 +21,20 @@ class Conversation {
    * @return {[object]} context
    */
   parse(context) {
-    var tokens = context.queryTokens
+    return new Promise(function(resolve, reject) {
+      var tokens = context.queryTokens
 
-    for(var i=0; i<tokens.length; i++) {
-      if (ArrayUtils.string_match(dictionary.greetings, tokens[i])) {
-        context.replies.push(ArrayUtils.random_element(['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']))
-        context.replies.push('Prompt for carpool goes here')
-        break
+      for(var i=0; i<tokens.length; i++) {
+        if (Util.string_match(dictionary.greetings, tokens[i])) {
+          context.action = 'greet'
+          // context.replies.push(Util.random_element(this.replies))
+          // context.replies.push('Prompt for carpool goes here')
+          break
+        }
       }
-    }
 
-    return context
+      return resolve(context)
+    });
   }
 }
 
