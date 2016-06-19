@@ -22,7 +22,6 @@ app.get('/', function (req, res) {
 })
 
 app.post('/webhook/', function (req, res) {
-  console.log('POST /webhook/')
   var context = {
     query: '',
     postback: null,
@@ -41,15 +40,10 @@ app.post('/webhook/', function (req, res) {
     else if (event.postback && event.postback.payload) {
       context.postback = event.postback
     }
-
     Chevy.think(context)
-    .then(function(context) {
-      Chevy.reply(sender, context.replies)
-    })
+    Chevy.reply(sender, context.replies)
   }
 
-  Chevy.think(context)
-  Chevy.reply(sender, context.replies)
   res.sendStatus(200)
 })
 
