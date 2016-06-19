@@ -1,7 +1,8 @@
 'use strict'
 
+var Promise = require('bluebird')
 var dictionary = require('../dictionary')
-var ArrayUtils = require('../../array-utils')
+var Util = require('../../utils')
 
 /**
  * Conversation class
@@ -9,6 +10,10 @@ var ArrayUtils = require('../../array-utils')
  */
 
 class Conversation {
+  constructor() {
+    this.replies = ['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']
+  }
+
   /**
    * Parses the context object for any potential conversation
    * keywords and adds the appropriate replies
@@ -25,9 +30,9 @@ class Conversation {
         // context.replies.push('Prompt for carpool goes here')
         break
       }
-    }
 
-    return context
+      return resolve(context)
+    }
   }
 }
 

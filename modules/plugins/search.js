@@ -1,7 +1,7 @@
 'use strict'
 
 var dictionary = require('../dictionary')
-var ArrayUtils = require('../../array-utils')
+var Util = require('../../utils')
 
 /**
  * Carpool search class
@@ -33,11 +33,10 @@ class Search {
         } else {
           context.actions.push = 'requestOriginAndDestination'
         }
-        break
       }
-    }
 
-    return context
+      return resolve(context)
+    }
   }
 
   /**

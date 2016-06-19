@@ -3,8 +3,8 @@
 var request = require('request-promise')
 var natural = require('natural')
 var Promise = require('bluebird')
-var conversation = require('./plugins/conversation')
-var search = require('./plugins/search')
+var conversation = require('./plugins/conversation').parse
+var search = require('./plugins/search').parse
 
 class Chevy {
   constructor() {
@@ -69,14 +69,29 @@ class Chevy {
   think(context) {
     context.queryTokens = this.tokenizer.tokenize(context.query)
 
-    // TODO: figure out a better way to run all plugins
-    context = conversation.parse(context)
-    context = search.parse(context)
+    var plugins = [conversation, search]
 
-    if (context.replies.length === 0) {
-      context.replies.push('Sorry, I am still learning and I am not quite sure what you meant!')
-    }
+    // TODO: figure out a better way to run all plugins
+    return plugins.reduce(function(sequence, next) {
+      return sequence.then(next)
+    }, Promise.resolve(context))
+    .then(function(context) {
+      if (context.replies.length === 0) {
+        context.replies.push('Sorry, I am still learning and I am not quite sure what you meant!')
+      }
+      return Promise.resolve(context)
+    })
+    .catch(function(err) {
+      console.log(err)
+      context = {
+        replies: ['Something went wrong, please try again!']
+      }
+
+      return Promise.resolve(context)
+    })
+
+
   }
 }
 
-module.exports = new Chevy();
+module.exports = new Chevy()

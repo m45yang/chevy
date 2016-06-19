@@ -3,6 +3,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
+var Promise = require('bluebird')
 var Chevy = require('./modules/chevy')
 
 var app = express()
@@ -21,6 +22,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/webhook/', function (req, res) {
+  console.log('POST /webhook/')
   var context = {
     query: '',
     postback: null,
@@ -35,9 +37,15 @@ app.post('/webhook/', function (req, res) {
     var sender = event.sender.id
     if (event.message && event.message.text) {
       context.query = event.message.text
-    } else if (event.postback && event.postback.payload) {
+    }
+    else if (event.postback && event.postback.payload) {
       context.postback = event.postback
     }
+
+    Chevy.think(context)
+    .then(function(context) {
+      Chevy.reply(sender, context.replies)
+    })
   }
 
   Chevy.think(context)
@@ -46,12 +54,12 @@ app.post('/webhook/', function (req, res) {
 })
 
 // for Facebook verification
-// app.get('/webhook/', function (req, res) {
-//   if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
-//       res.send(req.query['hub.challenge'])
-//   }
-//   res.send('Error, wrong token')
-// })
+app.get('/webhook/', function (req, res) {
+  if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+      res.send(req.query['hub.challenge'])
+  }
+  res.send('Error, wrong token')
+})
 
 // Spin up the server
 app.listen(app.get('port'), function() {
