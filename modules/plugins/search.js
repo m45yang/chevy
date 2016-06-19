@@ -1,5 +1,6 @@
 'use strict'
 
+var Promise = require('bluebird')
 var dictionary = require('../dictionary')
 var Util = require('../../utils')
 
@@ -15,7 +16,7 @@ var parse = function(context) {
   var destination = ''
 
   for(var i=0; i<tokens.length; i++) {
-    if (Util.string_match(dictionary.search, tokens[i])) {
+    if (Util.stringMatch(dictionary.search, tokens[i])) {
       origin = Util.getOrigin(tokens)
       destination = Util.getDestination(tokens)
       if (origin !== '' && destination !== '') {
@@ -34,6 +35,10 @@ var parse = function(context) {
       }
     }
   }
+
+  console.log(context)
+
+  return Promise.resolve(context)
 }
 
 

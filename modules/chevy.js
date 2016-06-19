@@ -26,7 +26,7 @@ class Chevy {
 
     var self = this
     var messageData = null
-    replies.reduce(function(sequence, reply) {
+    return replies.reduce(function(sequence, reply) {
       messageData = {
         text: reply
       }
@@ -69,9 +69,16 @@ class Chevy {
    */
   think(context) {
     context.queryTokens = this.tokenizer.tokenize(context.query)
-    conversation(context)
-    search(context)
-    action(context)
+    return conversation(context)
+    .then(function(context) {
+      return search(context)
+    })
+    .then(function(context) {
+      return action(context)
+    })
+    .catch(function(err) {
+      console.log(err)
+    })
   }
 }
 

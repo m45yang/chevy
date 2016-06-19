@@ -14,13 +14,13 @@ var parse = function(context) {
   var tokens = context.queryTokens
 
   for(var i=0; i<tokens.length; i++) {
-    if (Util.string_match(dictionary.greetings, tokens[i])) {
+    if (Util.stringMatch(dictionary.greetings, tokens[i])) {
       context.actions.push('greet')
-      // context.replies.push(ArrayUtils.random_element(['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']))
-      // context.replies.push('Prompt for carpool goes here')
       break
     }
   }
+
+  return Promise.resolve(context)
 }
 
 module.exports = parse
