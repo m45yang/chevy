@@ -36,8 +36,6 @@ var parse = function(context) {
     }
   }
 
-  console.log(context)
-
   return Promise.resolve(context)
 }
 

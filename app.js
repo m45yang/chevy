@@ -48,9 +48,13 @@ app.post('/webhook/', function (req, res) {
     else if (event.postback && event.postback.payload) {
       context.postback = event.postback
     }
+    // no message or postback given
+    else {
+      continue
+    }
     Chevy.think(context)
     .then(function(context) {
-      Chevy.reply(sender, context.replies)
+      return Chevy.reply(sender, context.replies)
     })
   }
 

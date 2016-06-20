@@ -20,13 +20,17 @@ class Chevy {
    * @param  {array} text    [array containing all the needed replies]
    */
   reply(sender, replies) {
-    // Fail safe
-    if (replies.length === 0) {
-      replies.push('Sorry, I didn\'t understand what you said!')
-    }
-
     var self = this
     var messageData = null
+
+    // Fail safe
+    if (replies.length === 0) {
+      messageData = {
+        text: 'Sorry, I didn\'t understand what you said!'
+      }
+      return self.sendMessage(sender, messageData)
+    }
+
     return replies.reduce(function(sequence, reply) {
       messageData = {
         text: reply
@@ -76,9 +80,6 @@ class Chevy {
     })
     .then(function(context) {
       return action(context)
-    })
-    .catch(function(err) {
-      console.log(err)
     })
   }
 }
