@@ -88,6 +88,14 @@ var rideSearch = function(origin, destination, date) {
   })
 }
 
+/**
+ * Parses an array of tokens to determine if there is an
+ * origin-destination pair match
+ * @param  {[string]}  origin
+ * @param  {[string]}  destination
+ * @param  {[array]}  tokens
+ * @return {Boolean}
+ */
 var isMatch = function(origin, destination, tokens) {
   var driverOrigin = Util.getOrigin(tokens)
   var driverDestination = Util.getDestination(tokens)
