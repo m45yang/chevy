@@ -20,8 +20,9 @@ class Chevy {
    * @param  {array} text    [array containing all the needed replies]
    */
   reply(sender, replies) {
+    // Fail safe
     if (replies.length === 0) {
-      return
+      replies.push('Sorry, I didn\'t understand what you said!')
     }
 
     var self = this

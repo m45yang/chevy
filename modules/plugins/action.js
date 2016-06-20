@@ -21,9 +21,14 @@ var parse = function(context) {
   if (actions.indexOf('search') > -1) {
     return rideSearch(context.origin, context.destination)
     .then(function(links) {
-      links.forEach(function(link, index, links) {
-        context.replies.push(link)
-      })
+      if (links.length > 0) {
+        links.forEach(function(link, index, links) {
+          context.replies.push(link)
+        })
+      }
+      else {
+        context.replies.push('No rides found')
+      }
 
       return Promise.resolve(context)
     })
