@@ -74,13 +74,30 @@ var getOrigin = function(wordlist) {
 
   wordlist.forEach(function(element, index, wordlist) {
     if (element === 'from') {
-      if (stringMatch(dictionary.locations, wordlist[index + 1])) {
-        origin = wordlist[index + 1]
+      var oneWord = wordlist[index + 1]
+      var twoWord = oneWord + wordlist[index + 2]
+
+      if (stringMatch(dictionary.locations.oneWord, oneWord)) {
+        origin = oneWord
+      }
+      else if (stringMatch(dictionary.locations.twoWord, twoWord)) {
+        origin = twoWord
       }
     }
     else if (element === 'to') {
-      if (index > 0 && stringMatch(dictionary.locations, wordlist[index - 1])) {
-        origin = wordlist[index - 1]
+
+      if (index > 0) {
+        var oneWord = wordlist[index - 1]
+        if (stringMatch(dictionary.locations.oneWord, oneWord)) {
+          origin = oneWord
+        }
+      }
+
+      if (index > 1) {
+        var twoWord = wordlist[index - 2] + wordlist[index - 1]
+        if (stringMatch(dictionary.locations.twoWord, twoWord)) {
+          origin = twoWord
+        }
       }
     }
   })
@@ -101,9 +118,15 @@ var getDestination = function(wordlist) {
   var origin = ''
 
   wordlist.forEach(function(element, index, wordlist) {
-    if (element === keyword) {
-      if (stringMatch(dictionary.locations, wordlist[index + 1])) {
-        origin = wordlist[index + 1]
+    if (element === 'to') {
+      var oneWord = wordlist[index + 1]
+      var twoWord = oneWord + wordlist[index + 2]
+
+      if (stringMatch(dictionary.locations.oneWord, oneWord)) {
+        origin = oneWord
+      }
+      else if (stringMatch(dictionary.locations.twoWord, twoWord)) {
+        origin = twoWord
       }
     }
   })

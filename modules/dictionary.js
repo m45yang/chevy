@@ -5,10 +5,15 @@ var dictionary = {
   search: [
     'carpool', 'ride', 'rideshare', 'seat', 'from', 'to'
   ],
-  locations: [
-    'toronto', 'mississauga', 'markham', 'scarborough',
-    'waterloo', 'kitchener'
-  ]
+  locations: {
+    oneWord: [
+      'toronto', 'mississauga', 'markham', 'scarborough',
+      'waterloo', 'kitchener'
+    ],
+    twoWord: [
+      'northyork', 'richmondhill'
+    ]
+  }
 }
 
 module.exports = dictionary
