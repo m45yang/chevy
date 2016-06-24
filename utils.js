@@ -79,7 +79,7 @@ var getOrigin = function(wordlist) {
       }
     }
     else if (element === 'to') {
-      if (index > 1 && stringMatch(dictionary.locations, wordlist[index - 1])) {
+      if (index > 0 && stringMatch(dictionary.locations, wordlist[index - 1])) {
         origin = wordlist[index - 1]
       }
     }

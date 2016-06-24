@@ -3,10 +3,10 @@ var dictionary = {
     'hello', 'yo', 'whats up', 'hey','hi'
   ],
   search: [
-    'carpool', 'ride', 'rideshare', 'seat', 'from'
+    'carpool', 'ride', 'rideshare', 'seat', 'from', 'to'
   ],
   locations: [
-    'toronto', 'missisauga', 'north york', 'markham', 'scarborough',
+    'toronto', 'mississauga', 'markham', 'scarborough',
     'waterloo', 'kitchener'
   ]
 }
