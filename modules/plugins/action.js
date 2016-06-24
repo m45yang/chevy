@@ -70,6 +70,8 @@ var rideSearch = function(origin, destination, date) {
 
     data.forEach(function(record, index, records) {
       var tokens = tokenizer.tokenize(record.message)
+      // If the origin and destination match and it's not a 'looking' post,
+      // add it to the existing matches
       if (isMatch(origin, destination, tokens) && !Util.stringMatch(tokens, 'looking')) {
         matches.push(graphGetAsync(record.id))
       }
