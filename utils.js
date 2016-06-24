@@ -20,8 +20,8 @@ var randomElement = function(array) {
 
 /**
  * Uses the Jaro-Winkler string distance algorithm to determine if
- * there is a plausible match for a word within a wordlist
- * @param  {[array]} wordlist [list of words to check]
+ * there is a plausible match for @word within @wordlist
+ * @param  {[array]} wordlist [array of words to check]
  * @param  {[string]} word    [word to match]
  * @return {[bool]}           [true for yes, false for no]
  */
@@ -29,7 +29,7 @@ var stringMatch = function(wordlist, word) {
   var match = false
   var coefficient
 
-  wordlist.forEach(function(element, index, wordlist) {
+  wordlist.forEach(function(element, index) {
     coefficient = natural.JaroWinklerDistance(word, element)
     if (coefficient > MIN_MATCH_THRESHOLD) {
       match = true
@@ -37,6 +37,28 @@ var stringMatch = function(wordlist, word) {
   })
 
   return match
+}
+
+/**
+ * Uses the Jaro-Winkler string distance algorithm to determine if
+ * there is a plausible match for a word within @inputlist with
+ * any word in @wordlist
+ * @param  {[array]} wordlist  [array of words to check]
+ * @param  {[array]} inputlist [array of words to match]
+ * @return {[bool]}            [true for yes, false for no]
+ */
+var arrayStringMatch = function(wordlist, inputlist) {
+  var match = false
+  var coefficient
+
+  inputList.forEach(function(input, index) {
+    wordlist.forEach(function(word, index) {
+      coefficient = natural.JaroWinklerDistance(word, input)
+      if (coefficient > MIN_MATCH_THRESHOLD) {
+        match = true
+      }
+    })
+  })
 }
 
 /**
@@ -92,6 +114,7 @@ var getDestination = function(wordlist) {
 module.exports = {
   randomElement: randomElement,
   stringMatch: stringMatch,
+  arrayStringMatch: arrayStringMatch,
   getOrigin: getOrigin,
   getDestination: getDestination
 }

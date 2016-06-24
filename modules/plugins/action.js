@@ -8,7 +8,7 @@ var dictionary = require('../dictionary')
 var Util = require('../../utils')
 
 var fbGroupId = '372772186164295'
-var userAccessToken = 'EAACEdEose0cBAMLrIwSFm2AFT94ZAuRs3xSLTa4I7ACwbWHVDSFy6Soj9LOrapauXa6mW7NTu6iZCOW9WvfXzIqkp2BidFoBoZCkPxHIKGT4GW528tnhkLgETbNjYuZCwvL5DjTEFoPc9jDz5jP7iiqcZCM731VvHcJ7UcOgmsgZDZD'
+var userAccessToken = 'EAACEdEose0cBAIH0twvrrg5aCjNPKxVucSIBaZBlBzCqtrWU4jUOdlGSmSHGfXw88sOJSmkLiGtYgtqD5C8PBoSjij3RNxuPwcHscvDZBzUZAwGaErZAvtk5J7ZCUZA3dZCYCgwtPqZAK2n3VZC2lAL2ZANfEooWEOWQRVzzfTEG6VsQZDZD'
 
 /**
  * Gets the actions required from the context object
@@ -70,7 +70,7 @@ var rideSearch = function(origin, destination, date) {
 
     data.forEach(function(record, index, records) {
       var tokens = tokenizer.tokenize(record.message)
-      if (isMatch(origin, destination, tokens)) {
+      if (isMatch(origin, destination, tokens) && !Util.stringMatch(tokens, 'looking')) {
         matches.push(graphGetAsync(record.id))
       }
     })
