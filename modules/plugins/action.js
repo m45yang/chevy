@@ -3,12 +3,11 @@
 var Promise = require('bluebird')
 var graph = require('fbgraph')
 var natural = require('natural')
-var moment = require('moment')
 var dictionary = require('../dictionary')
 var Util = require('../../utils')
 
 var fbGroupId = '372772186164295'
-var userAccessToken = 'EAACEdEose0cBAIH0twvrrg5aCjNPKxVucSIBaZBlBzCqtrWU4jUOdlGSmSHGfXw88sOJSmkLiGtYgtqD5C8PBoSjij3RNxuPwcHscvDZBzUZAwGaErZAvtk5J7ZCUZA3dZCYCgwtPqZAK2n3VZC2lAL2ZANfEooWEOWQRVzzfTEG6VsQZDZD'
+var userAccessToken = 'EAACEdEose0cBAL5ZB2RrYMqVLy8txm6owTsehp9s6s4BnazA6NlHgpktPuqZBEzO2CKFjGenySn8kNXFc0ZAgcoZAYHuEsnWTFoAjXMPkuvEFrrJZBDbumKft3nSaeS2QW5lZCRnsJPjnw9gEHR1jZCgRj3kwUkiL3KlgtMFXDaoQZDZD'
 
 /**
  * Gets the actions required from the context object
@@ -60,9 +59,8 @@ var rideSearch = function(origin, destination, date) {
   graph.setAccessToken(userAccessToken)
 
   var graphGetAsync = Promise.promisify(graph.get)
-  var since = moment().subtract(3, "days").unix()
 
-  return graphGetAsync(fbGroupId + '/feed' + '?since=' + since)
+  return graphGetAsync(fbGroupId + '/feed/')
   .then(function(res) {
     var data = res.data
     var matches = []
@@ -100,7 +98,7 @@ var rideSearch = function(origin, destination, date) {
  */
 var isMatch = function(origin, destination, tokens) {
   var driverOrigin = Util.getOrigin(tokens)
-  var driverDestination = Util.getDestination(tokens)
+  var driverDestination = Util.getDestination(tokens, driverOrigin)
 
   if (origin === driverOrigin && destination === driverDestination) {
     return true

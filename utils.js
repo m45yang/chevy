@@ -2,7 +2,7 @@
 
 var natural = require('natural')
 var dictionary = require('./modules/dictionary')
-var MIN_MATCH_THRESHOLD = 0.8
+var MIN_MATCH_THRESHOLD = 0.95
 
 /**
  * Utilify functions
@@ -62,76 +62,59 @@ var arrayStringMatch = function(wordlist, inputlist) {
 }
 
 /**
- * Currently a very dumb function to find the origin of a
+ * Dumb function to find the origin of a
  * carpool search query
  * Finds the word after the keyword 'from' and assumes that
  * to be the origin
- * @param  {[array]}  wordlist
+ * @param  {[array]}  tokens
  * @return {[string]} origin
  */
-var getOrigin = function(wordlist) {
+var getOrigin = function(tokens) {
   var origin = ''
 
-  wordlist.forEach(function(element, index, wordlist) {
-    if (element === 'from') {
-      var oneWord = wordlist[index + 1]
-      var twoWord = oneWord + wordlist[index + 2]
+  tokens.forEach(function(element, index, tokens) {
+    if (origin !== '') return
 
-      if (stringMatch(dictionary.locations.oneWord, oneWord)) {
-        origin = oneWord
-      }
-      else if (stringMatch(dictionary.locations.twoWord, twoWord)) {
-        origin = twoWord
-      }
+    var oneWord = element.toLowerCase()
+    var twoWord = (oneWord + tokens[index + 1]).toLowerCase()
+
+    if (stringMatch(dictionary.locations.oneWord, oneWord)) {
+      origin = oneWord
     }
-    else if (element === 'to') {
-
-      if (index > 0) {
-        var oneWord = wordlist[index - 1]
-        if (stringMatch(dictionary.locations.oneWord, oneWord)) {
-          origin = oneWord
-        }
-      }
-
-      if (index > 1) {
-        var twoWord = wordlist[index - 2] + wordlist[index - 1]
-        if (stringMatch(dictionary.locations.twoWord, twoWord)) {
-          origin = twoWord
-        }
-      }
+    else if (stringMatch(dictionary.locations.twoWord, twoWord)) {
+      origin = twoWord
     }
   })
-
-  return origin.toUpperCase()
+  return origin
 }
 
 /**
- * Currently a very dumb function to find the destination of a
+ * Function to find the destination of a
  * carpool search query
- * Finds the word after the keyword 'from' and assumes that
- * to be the origin
- * @param  {[array]}  wordlist
- * @return {[string]} origin
+ * Destination cannot match @origin
+ * @param  {[array]}  tokens
+ * @param  {[string]} origin
+ * @return {[string]} destination
  */
-var getDestination = function(wordlist) {
+var getDestination = function(tokens, origin) {
   var keyword = 'to'
-  var origin = ''
+  var destination = ''
 
-  wordlist.forEach(function(element, index, wordlist) {
-    if (element === 'to') {
-      var oneWord = wordlist[index + 1]
-      var twoWord = oneWord + wordlist[index + 2]
 
-      if (stringMatch(dictionary.locations.oneWord, oneWord)) {
-        origin = oneWord
-      }
-      else if (stringMatch(dictionary.locations.twoWord, twoWord)) {
-        origin = twoWord
-      }
+  tokens.forEach(function(token, index, tokens) {
+    if (destination !== '') return
+
+    var oneWord = token.toLowerCase()
+    var twoWord = (oneWord + tokens[index + 1]).toLowerCase()
+
+    if (stringMatch(dictionary.locations.oneWord, oneWord)) {
+      destination = origin !== oneWord ? oneWord : ''
+    }
+    else if (stringMatch(dictionary.locations.twoWord, twoWord)) {
+      destination = origin !== twoWord ? twoWord : ''
     }
   })
-
-  return origin.toUpperCase()
+  return destination
 }
 
 module.exports = {

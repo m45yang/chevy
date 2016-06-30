@@ -18,7 +18,7 @@ var parse = function(context) {
   for(var i=0; i<tokens.length; i++) {
     if (Util.stringMatch(dictionary.search, tokens[i])) {
       origin = Util.getOrigin(tokens)
-      destination = Util.getDestination(tokens)
+      destination = Util.getDestination(tokens, origin)
       if (origin !== '' && destination !== '') {
         context.actions.push('search')
         context.origin = origin
