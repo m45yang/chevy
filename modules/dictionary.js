@@ -7,7 +7,7 @@ var dictionary = {
   ],
   locations: {
     oneWord: [
-      'toronto', 'mississauga', 'markham', 'scarborough',
+      'toronto', 'missisauga', 'markham', 'scarborough',
       'waterloo', 'kitchener', 'ottawa'
     ],
     twoWord: [

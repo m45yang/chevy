@@ -36,7 +36,9 @@ class Chevy {
         text: reply
       }
 
-      return sequence.then(self.sendMessage(sender, messageData))
+      return sequence.then(function(result) {
+        return self.sendMessage(sender, messageData)
+      })
       .catch(function(error) {
         if (error) {
           console.log('Error sending messages: ', error)
