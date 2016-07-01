@@ -60,9 +60,10 @@ var rideSearch = function(origin, destination, date) {
 
   var graphGetAsync = Promise.promisify(graph.get)
 
-  return graphGetAsync(fbGroupId + '/feed/')
+  return graphGetAsync(fbGroupId + '/feed?limit=100')
   .then(function(res) {
     var data = res.data
+    console.log(res.data.length)
     var matches = []
     var tokenizer = new natural.WordTokenizer()
 
