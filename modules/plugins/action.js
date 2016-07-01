@@ -7,7 +7,7 @@ var dictionary = require('../dictionary')
 var Util = require('../../utils')
 
 var fbGroupId = '372772186164295'
-var userAccessToken = 'EAACEdEose0cBAKpGwc1Ch3uI83AfwHygpaa6amG5ee4o3dPcOZBOwpnxCnd33noPBQBY7K8FQjWGZBTTGeM7vlMHZCB5c4f3dYtKzlgqZBDh2ZCZAZARFuhBityBZA1qhh0rePRwCRYJCG8UCB5sdZB326PbtxCtRlMs3mUZB4FUpXMgZDZD'
+var userAccessToken = 'EAACEdEose0cBAL5ZB2RrYMqVLy8txm6owTsehp9s6s4BnazA6NlHgpktPuqZBEzO2CKFjGenySn8kNXFc0ZAgcoZAYHuEsnWTFoAjXMPkuvEFrrJZBDbumKft3nSaeS2QW5lZCRnsJPjnw9gEHR1jZCgRj3kwUkiL3KlgtMFXDaoQZDZD'
 
 /**
  * Gets the actions required from the context object
