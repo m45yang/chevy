@@ -49,6 +49,10 @@ app.post('/webhook/', function (req, res) {
     .then(function(context) {
       return Chevy.reply(sender, context.replies)
     })
+    .catch(function(err) {
+      console.log(err)
+      return Chevy.reply(sender, ["Something went wrong, please try again!"])
+    })
   }
 
   res.sendStatus(200)
