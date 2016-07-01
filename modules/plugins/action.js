@@ -7,7 +7,7 @@ var dictionary = require('../dictionary')
 var Util = require('../../utils')
 
 var fbGroupId = '372772186164295'
-var userAccessToken = 'EAACEdEose0cBAKpGwc1Ch3uI83AfwHygpaa6amG5ee4o3dPcOZBOwpnxCnd33noPBQBY7K8FQjWGZBTTGeM7vlMHZCB5c4f3dYtKzlgqZBDh2ZCZAZARFuhBityBZA1qhh0rePRwCRYJCG8UCB5sdZB326PbtxCtRlMs3mUZB4FUpXMgZDZD'
+var userAccessToken = 'EAACEdEose0cBAD5PBFNxsjhWfZAMZAAr8ADh2DQ5VoNOci0dmM8krJDXiZAL79SW8sG5hrhTF1FW19FWZCzmW4q6WGEtykKPbyAl2FNdgjpMeNkXMen2XpSCr7VZAvLNPaFRRbrFgE33iGSZCRhBwIQIgM9SXSPrkCLnySpSBYRQZDZD'
 var searchLimit = 50
 
 /**
@@ -21,29 +21,38 @@ var parse = function(context) {
 
   if (actions.indexOf('search') > -1) {
     return rideSearch(context.origin, context.destination)
-    .then(function(links) {
-      if (links.length > 0) {
-        links.forEach(function(link, index, links) {
-          context.replies.push(link)
+    .then(function(elements) {
+      if (elements.length > 0) {
+        elements.forEach(function(element) {
+          var messageData = {
+            attachment: {
+              type: 'template',
+              'payload': {
+                template_type: 'generic',
+                elements: element
+              }
+            }
+          }
+
+          context.replies.push(messageData)
         })
-        console.log(context)
       }
       else {
-        context.replies.push('No rides found')
+        context.replies.push({ text: 'No rides found'})
       }
 
       return Promise.resolve(context)
     })
   }
   else if (actions.indexOf('requestOrigin') > -1) {
-    context.replies.push('Please enter an origin')
+    context.replies.push({ text: 'Please enter an origin' })
   }
   else if (actions.indexOf('requestDestination') > -1) {
-    context.replies.push('Please enter a destination')
+    context.replies.push({ text: 'Please enter a destination' })
   }
   else if (actions.indexOf('greet') > -1) {
     var greetings = ['Hi!', 'Hello! I am Chevy!', 'Hey there!', 'Hey!', 'Chevy reporting for duty!']
-    context.replies.push(Util.randomElement(greetings))
+    context.replies.push({ text: Util.randomElement(greetings) })
   }
 
   return Promise.resolve(context)
@@ -59,8 +68,11 @@ var parse = function(context) {
  */
 var rideSearch = function(origin, destination, date) {
   graph.setAccessToken(userAccessToken)
-
   var graphGetAsync = Promise.promisify(graph.get)
+
+  // variables to pass along promise chain
+  var matchedResponses
+  var matchedUserPictures
 
   return graphGetAsync(fbGroupId + '/feed?limit=' + searchLimit)
   .then(function(res) {
@@ -79,14 +91,48 @@ var rideSearch = function(origin, destination, date) {
 
     return Promise.all(matches)
   })
-  .then(function(res) {
-    var links = []
+  .then(function(responses) {
+    matchedResponses = responses
+    var matchedUsers = []
 
-    res.forEach(function(element, index, elements) {
-      links.push(element.actions[0].link)
+    // Grab the profile pictures of the users who posted the ride
+    matchedResponses.forEach(function(matchedResponse) {
+      matchedUsers.push(graphGetAsync(matchedResponse.from.id + '/link'))
     })
 
-    return Promise.resolve(links)
+    return Promise.all(matchedUsers)
+  })
+  .then(function(pictures) {
+    matchedUserPictures = pictures
+    var replies = [[]]
+    var elementGroup = 0
+
+    // Build the elements to be added to a generic template
+    // message
+    matchedResponses.forEach(function(response, index) {
+      // Increase element group every 10 elements
+      if (index % 10 === 9) {
+        elementGroup += 1
+        replies[elementGroup] = []
+      }
+
+      var reply = {
+        title: response.from.name,
+        image_url: matchedUserPictures[index].location,
+        subtitle: response.message,
+        buttons: [
+          {
+            type: 'web_url',
+            url: response.actions[0].link,
+            title: 'Original Post'
+          }
+        ]
+      }
+
+      replies[elementGroup].push(reply)
+    })
+
+    return Promise.resolve(replies)
   })
 }
 

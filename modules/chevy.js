@@ -31,13 +31,10 @@ class Chevy {
 
     return replies.reduce(function(sequence, reply) {
       return sequence.then(function(result) {
-        return self.sendMessage(sender, {
-          text: reply
-        })
+        return self.sendMessage(sender, reply)
       })
       .catch(function(error) {
         if (error) {
-          console.log('Error sending messages: ', error)
           return Promise.reject(error)
         }
       });
@@ -71,7 +68,9 @@ class Chevy {
    * @return {[null]}
    */
   think(context) {
+    // tokenize the query
     context.queryTokens = this.tokenizer.tokenize(context.query)
+
     return conversation(context)
     .then(function(context) {
       return search(context)
