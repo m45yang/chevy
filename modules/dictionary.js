@@ -8,10 +8,10 @@ var dictionary = {
   locations: {
     oneWord: [
       'toronto', 'missisauga', 'markham', 'scarborough',
-      'waterloo', 'kitchener', 'ottawa'
+      'waterloo', 'kitchener', 'ottawa', 'bk', 'fairview'
     ],
     twoWord: [
-      'northyork', 'richmondhill'
+      'northyork', 'richmondhill', 'fairview mall'
     ]
   }
 }

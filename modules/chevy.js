@@ -21,23 +21,19 @@ class Chevy {
    */
   reply(sender, replies) {
     var self = this
-    var messageData = null
 
     // Fail safe
     if (replies.length === 0) {
-      messageData = {
+      return self.sendMessage(sender, {
         text: 'Sorry, I didn\'t understand what you said!'
-      }
-      return self.sendMessage(sender, messageData)
+      })
     }
 
     return replies.reduce(function(sequence, reply) {
-      messageData = {
-        text: reply
-      }
-
       return sequence.then(function(result) {
-        return self.sendMessage(sender, messageData)
+        return self.sendMessage(sender, {
+          text: reply
+        })
       })
       .catch(function(error) {
         if (error) {
