@@ -7,7 +7,7 @@ var dictionary = require('../dictionary')
 var Util = require('../../utils')
 
 var fbGroupId = '372772186164295'
-var userAccessToken = 'EAACEdEose0cBAD5PBFNxsjhWfZAMZAAr8ADh2DQ5VoNOci0dmM8krJDXiZAL79SW8sG5hrhTF1FW19FWZCzmW4q6WGEtykKPbyAl2FNdgjpMeNkXMen2XpSCr7VZAvLNPaFRRbrFgE33iGSZCRhBwIQIgM9SXSPrkCLnySpSBYRQZDZD'
+var userAccessToken = 'EAACEdEose0cBADFPUooKZCcL1ItYt3o6Y7UU5hZBGgPySpfgBtrFjPcWCo1lGZA4GeDuwIVMY2MDASWnyUi7Ea3r107R2dA2ZBgJtohW2BiIrC6QZCwEd5YrXZCZAfj6C7OUuMETD3ZAEvGpIIZCkmyZB0ZCyJvfijZCPG4fZCJ7NnDhfxAZDZD'
 var searchLimit = 50
 
 /**
@@ -36,6 +36,7 @@ var parse = function(context) {
 
           context.replies.push(messageData)
         })
+
       }
       else {
         context.replies.push({ text: 'No rides found'})
@@ -72,7 +73,6 @@ var rideSearch = function(origin, destination, date) {
 
   // variables to pass along promise chain
   var matchedResponses
-  var matchedUserPictures
 
   return graphGetAsync(fbGroupId + '/feed?limit=' + searchLimit)
   .then(function(res) {
@@ -93,17 +93,6 @@ var rideSearch = function(origin, destination, date) {
   })
   .then(function(responses) {
     matchedResponses = responses
-    var matchedUsers = []
-
-    // Grab the profile pictures of the users who posted the ride
-    matchedResponses.forEach(function(matchedResponse) {
-      matchedUsers.push(graphGetAsync(matchedResponse.from.id + '/link'))
-    })
-
-    return Promise.all(matchedUsers)
-  })
-  .then(function(pictures) {
-    matchedUserPictures = pictures
     var replies = [[]]
     var elementGroup = 0
 
@@ -118,7 +107,6 @@ var rideSearch = function(origin, destination, date) {
 
       var reply = {
         title: response.from.name,
-        image_url: matchedUserPictures[index].location,
         subtitle: response.message,
         buttons: [
           {
