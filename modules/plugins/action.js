@@ -22,6 +22,7 @@ var parse = function(context) {
   if (actions.indexOf('search') > -1) {
     return rideSearch(context.origin, context.destination)
     .then(function(elements) {
+      // Compile the replies into messageData objects
       if (elements[0].length > 0) {
         elements.forEach(function(element) {
           var messageData = {
@@ -38,6 +39,7 @@ var parse = function(context) {
         })
 
       }
+      // Response for no rides found
       else {
         context.replies.push({ text: 'No rides found'})
       }
