@@ -1,7 +1,7 @@
 'use strict'
 
 var natural = require('natural')
-var dictionary = require('./modules/dictionary')
+var dictionary = require('./dictionary')
 var MIN_MATCH_THRESHOLD = 0.95
 
 /**

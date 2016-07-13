@@ -4,7 +4,7 @@ var Promise = require('bluebird')
 var graph = require('fbgraph')
 var natural = require('natural')
 var dictionary = require('../dictionary')
-var Util = require('../../utils')
+var Util = require('../utils')
 
 var fbGroupId = '372772186164295'
 var userAccessToken = 'EAACEdEose0cBADFPUooKZCcL1ItYt3o6Y7UU5hZBGgPySpfgBtrFjPcWCo1lGZA4GeDuwIVMY2MDASWnyUi7Ea3r107R2dA2ZBgJtohW2BiIrC6QZCwEd5YrXZCZAfj6C7OUuMETD3ZAEvGpIIZCkmyZB0ZCyJvfijZCPG4fZCJ7NnDhfxAZDZD'
