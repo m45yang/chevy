@@ -7,11 +7,11 @@ var dictionary = {
   ],
   locations: {
     oneWord: [
-      'toronto', 'missisauga', 'markham', 'scarborough',
+      'toronto', 'mississauga', 'markham', 'scarborough',
       'waterloo', 'kitchener', 'ottawa', 'bk', 'fairview'
     ],
     twoWord: [
-      'northyork', 'richmondhill', 'fairview mall'
+      'northyork', 'richmondhill', 'fairviewmall'
     ]
   }
 }
