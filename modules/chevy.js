@@ -33,11 +33,6 @@ class Chevy {
       return sequence.then(function(result) {
         return self.sendMessage(sender, reply)
       })
-      .catch(function(error) {
-        if (error) {
-          return Promise.reject(error)
-        }
-      });
     }, Promise.resolve())
   }
 
@@ -58,6 +53,9 @@ class Chevy {
           recipient: { id : sender },
           message: messageData,
       }
+    })
+    .catch(function(error) {
+      return Promise.reject(error)
     })
   }
 
