@@ -1,11 +1,12 @@
 'use strict'
 
-var express = require('express')
+var express    = require('express')
 var bodyParser = require('body-parser')
-var request = require('request')
-var Promise = require('bluebird')
-var graph = require('fbgraph')
-var Chevy = require('./modules/chevy')
+var Promise    = require('bluebird')
+var mongoose   = require('mongoose')
+var Chevy      = require('./modules/chevy')
+
+mongoose.connect('mongodb://localhost/chevy');
 
 var app = express()
 

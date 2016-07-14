@@ -1,7 +1,10 @@
 'use strict'
 
-var natural = require('natural')
+var natural    = require('natural')
 var dictionary = require('./dictionary')
+
+// Minimum match threshold for Jaro Winkler
+// Distance algorithm
 var MIN_MATCH_THRESHOLD = 0.95
 
 /**

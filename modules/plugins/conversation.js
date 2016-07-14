@@ -1,8 +1,8 @@
 'use strict'
 
-var Promise = require('bluebird')
+var Promise    = require('bluebird')
 var dictionary = require('../dictionary')
-var Util = require('../utils')
+var Util       = require('../utils')
 
 /**
  * Parses the context object for any potential conversation

@@ -1,11 +1,11 @@
 'use strict'
 
-var request = require('request-promise')
-var natural = require('natural')
-var Promise = require('bluebird')
+var request      = require('request-promise')
+var natural      = require('natural')
+var Promise      = require('bluebird')
 var conversation = require('./plugins/conversation')
-var search = require('./plugins/search')
-var action = require('./plugins/action')
+var search       = require('./plugins/search')
+var action       = require('./plugins/action')
 
 class Chevy {
   constructor() {
