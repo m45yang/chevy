@@ -6,11 +6,12 @@ var Promise      = require('bluebird')
 var conversation = require('./plugins/conversation')
 var search       = require('./plugins/search')
 var action       = require('./plugins/action')
+var config       = require('../config')
 
 class Chevy {
   constructor() {
     this.name = "Chevy"
-    this.accessToken = "EAAV2U0FJIDIBAFJ4RZANJuW9ILWY1z6cLZAR7NIue64LRxyNMYiVowrKm6xC4ZBzk6d3E2gH9Ca1ezf0ZCNUpMHaPFUfUv6d7uw0SmIQA56jSszf0fAIyZAVX5DqZBBRZAZBk9mKuwvhqVgz5Obs5gq7HzvkzcyVr0T6lSGsQSqSGwZDZD"
+    this.accessToken = config.pageAccessToken
     this.tokenizer = new natural.WordTokenizer()
   }
 
@@ -53,9 +54,6 @@ class Chevy {
           recipient: { id : sender },
           message: messageData,
       }
-    })
-    .catch(function(error) {
-      return Promise.reject(error)
     })
   }
 
