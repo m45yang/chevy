@@ -1,15 +1,15 @@
 'use strict'
 
-var Promise    = require('bluebird')
-var graph      = require('fbgraph').setVersion('2.7')
-var natural    = require('natural')
-var _          = require('lodash')
-var dictionary = require('../dictionary')
-var Util       = require('../utils')
-var config     = require('../../config')
+var Promise     = require('bluebird')
+var graph       = require('fbgraph').setVersion('2.7')
+var natural     = require('natural')
+var _           = require('lodash')
+var accessToken = require('../models/accessToken');
+var dictionary  = require('../dictionary')
+var Util        = require('../utils')
+var config      = require('../../config')
 
 var fbGroupId = config.fbGroupId
-var userAccessToken = 'EAAV2U0FJIDIBAAZB4EdGlCgRTZBNZBTkalJn6kWcPy1BoPawsJZC2Iz6dxsigpkvlCLPgUylZC3FJ64v8AGlXW1BTZC8nZB2yMBkC1tcJLFrGS7YUnKqGVTGxrxJIHQbV3cOJa8ch42PFZBGNI0yZBZAXmo3ec4FpABmAZD'
 var searchLimit = 50
 
 /**
@@ -22,7 +22,7 @@ var parse = function(context) {
   var actions = context.actions
 
   if (actions.indexOf('search') > -1) {
-    return rideSearch(context.origin, context.destination)
+    return rideSearch(context.origin, context.destination, context.sender)
     .then(function(elements) {
       // Compile the replies into messageData objects
       if (elements[0].length > 0) {
@@ -65,22 +65,28 @@ var parse = function(context) {
 
 /**
  * Searches facebook carpool group for drivers leaving
- * from origin to destination on date
+ * from origin to destination
  * @param  {[string]} origin
  * @param  {[string]} destination
- * @param  {[Date]}   date
+ * @param  {[string]} sender
  * @return {[object]} payload
  */
-var rideSearch = function(origin, destination, date) {
-  graph.setAccessToken(userAccessToken)
-  var graphGetAsync = Promise.promisify(graph.get)
+var rideSearch = function(origin, destination, sender) {
+  return accessToken.findOne({ userId: sender })
+  .then(function(token) {
+    if (!token) {
+      return Promise.reject({ status: 401, message: 'ACCESS_TOKEN_MISSING' })
+    }
+    graph.setAccessToken(token.accessToken)
+    var graphGetAsync = Promise.promisify(graph.get)
 
-  // variables to pass along promise chain
-  var matchedResponses
-  var query = fbGroupId + '/feed?limit=' + searchLimit
-              + '&fields=from,message,actions';
+    // variables to pass along promise chain
+    var matchedResponses
+    var query = fbGroupId + '/feed?limit=' + searchLimit
+                + '&fields=from,message,actions';
 
-  return graphGetAsync(query)
+    return graphGetAsync(query);
+  })
   .then(function(res) {
     var responses = res.data
     var matches = []

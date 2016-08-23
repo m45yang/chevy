@@ -14,19 +14,20 @@ module.exports = {
    * @param  {[object]} res [description]
    */
   facebook: function(req, res) {
+    var sender = req.query.sender
+
     // Redirect to the Oauth dialog if code
     // is not provided
     if (!req.query.code) {
       var authUrl = graph.getOauthUrl({
         "client_id": config.clientId,
-        "redirect_uri": config.authUrl
+        "redirect_uri": config.authUrl + '?sender=' + sender
       })
 
       if (!req.query.error) {
         res.redirect(authUrl)
       } else {
-        console.log(req.query.error)
-        res.send('Access denied.')
+        res.status(500).json({ message: 'Access denied.' });
       }
       return
     }
@@ -34,13 +35,31 @@ module.exports = {
     // Use provided code to get access token
     graph.authorize({
       "client_id": config.clientId,
-      "redirect_uri": config.authUrl,
+      "redirect_uri": config.authUrl + '?sender=' + sender,
       "client_secret": config.clientSecretKey,
       "code": req.query.code
     }, function (err, response) {
-      // store the user access token somewhere
-      console.log(response.access_token)
-      res.redirect('/')
+      if (err) {
+        return res.status(400).json({ message: err })
+      }
+
+      var query = {
+        userId: sender
+      }
+
+      var token = { 
+        userId: sender,
+        accessToken: response.access_token
+      }
+
+      accessToken.findOneAndUpdate(query, token, { upsert: true }, function(err, record) {
+        if (err) {
+          res.status(500).json({ message: err })
+        }
+        else {
+          res.redirect('/')
+        }
+      })
     })
   }
 

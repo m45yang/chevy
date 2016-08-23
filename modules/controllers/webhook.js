@@ -37,19 +37,21 @@ module.exports = {
         continue
       }
 
+      context.sender = sender
+
       Chevy.think(context)
       .then(function(context) {
         return Chevy.reply(sender, context.replies)
       })
       .catch(function(err) {
-        console.log(err)
+        req.log.error(err)
 
         // Authorization error, send link to prompt user to use
         // the provided link to authorize Chevy
-        if (err.type === 'OAuthException') {
+        if (err.message === 'ACCESS_TOKEN_MISSING') {
           return Chevy.reply(sender, [
             { text: 'Please authorize Chevy to access the Waterloo Carpool page for you by clicking on this link!' },
-            { text: config.authUrl }
+            { text: config.authUrl + '?sender=' + sender }
           ])
         }
         else {

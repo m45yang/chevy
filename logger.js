@@ -17,6 +17,17 @@ var initLogger = function(app) {
   // Expose logger
   app.log = logger
 
+  // Expose the logger to each request
+  app.use(function(req, res, next) {
+    req.log = app.log
+    next()
+  })
+
+  // Global error logger
+  app.use(function(err, req, res, next) {
+    app.log.error(err)
+  })
+
   // Per request logger
   app.use(bunyanMiddleware({
     name: 'chevy',
