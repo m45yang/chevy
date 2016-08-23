@@ -9,7 +9,7 @@ var Util       = require('../utils')
 var config     = require('../../config')
 
 var fbGroupId = config.fbGroupId
-var userAccessToken = 'EAAV2U0FJIDIBAKqdsQunNPA5g8zJEjdSPZCgIhEHg1HYBmyZBZBtgGTUNgkgAjjWMiAZCyKkKnSqvWzJso5q5y4rRmkTL8XT4lZBbuWJkJ035ApbjNSvJCW628ZCULKe9ocD91QgVtZCLqVGhlfINZCZAiTG5ZB7HuTX0ZD'
+var userAccessToken = 'EAAV2U0FJIDIBAAZB4EdGlCgRTZBNZBTkalJn6kWcPy1BoPawsJZC2Iz6dxsigpkvlCLPgUylZC3FJ64v8AGlXW1BTZC8nZB2yMBkC1tcJLFrGS7YUnKqGVTGxrxJIHQbV3cOJa8ch42PFZBGNI0yZBZAXmo3ec4FpABmAZD'
 var searchLimit = 50
 
 /**
