@@ -60,12 +60,12 @@ app.post('/webhook/', function (req, res) {
       // the provided link to authorize Chevy
       if (err.type === 'OAuthException' && err.code === 190) {
         return Chevy.reply(sender, [
-          {text: 'Please authorize Chevy to access the Waterloo Carpool page for you by clicking on this link!'},
-          {text: config.authUrl}
+          { text: 'Please authorize Chevy to access the Waterloo Carpool page for you by clicking on this link!' },
+          { text: config.authUrl }
         ])
       }
       else {
-        return Chevy.reply(sender, [{text: 'Something went wrong, please try again!'}])
+        return Chevy.reply(sender, [{ text: 'Something went wrong, please contact a developer!' }])
       }
     })
   }

@@ -1,14 +1,15 @@
 'use strict'
 
 var Promise    = require('bluebird')
-var graph      = require('fbgraph')
+var graph      = require('fbgraph').setVersion('2.7')
 var natural    = require('natural')
+var _          = require('lodash')
 var dictionary = require('../dictionary')
 var Util       = require('../utils')
 var config     = require('../../config')
 
 var fbGroupId = config.fbGroupId
-var userAccessToken = 'EAACEdEose0cBADFPUooKZCcL1ItYt3o6Y7UU5hZBGgPySpfgBtrFjPcWCo1lGZA4GeDuwIVMY2MDASWnyUi7Ea3r107R2dA2ZBgJtohW2BiIrC6QZCwEd5YrXZCZAfj6C7OUuMETD3ZAEvGpIIZCkmyZB0ZCyJvfijZCPG4fZCJ7NnDhfxAZDZD'
+var userAccessToken = 'EAAV2U0FJIDIBAKqdsQunNPA5g8zJEjdSPZCgIhEHg1HYBmyZBZBtgGTUNgkgAjjWMiAZCyKkKnSqvWzJso5q5y4rRmkTL8XT4lZBbuWJkJ035ApbjNSvJCW628ZCULKe9ocD91QgVtZCLqVGhlfINZCZAiTG5ZB7HuTX0ZD'
 var searchLimit = 50
 
 /**
@@ -76,32 +77,33 @@ var rideSearch = function(origin, destination, date) {
 
   // variables to pass along promise chain
   var matchedResponses
+  var query = fbGroupId + '/feed?limit=' + searchLimit
+              + '&fields=from,message,actions';
 
-  return graphGetAsync(fbGroupId + '/feed?limit=' + searchLimit)
+  return graphGetAsync(query)
   .then(function(res) {
-    var data = res.data
+    var responses = res.data
     var matches = []
     var tokenizer = new natural.WordTokenizer()
 
-    data.forEach(function(record, index, records) {
-      var tokens = tokenizer.tokenize(record.message)
+    var filteredResponses = _.filter(responses, function(response) {
+      var tokens = tokenizer.tokenize(response.message)
       // If the origin and destination match and it's not a 'looking' post,
       // add it to the existing matches
       if (isMatch(origin, destination, tokens) && !Util.stringMatch(tokens, 'looking')) {
-        matches.push(graphGetAsync(record.id))
+        return true   
+      }
+      else {
+        return false
       }
     })
 
-    return Promise.all(matches)
-  })
-  .then(function(responses) {
-    matchedResponses = responses
     var replies = [[]]
     var elementGroup = 0
 
     // Build the elements to be added to a generic template
     // message
-    matchedResponses.forEach(function(response, index) {
+    filteredResponses.forEach(function(response, index) {
       // Increase element group every 10 elements
       if (index % 10 === 9) {
         elementGroup += 1
