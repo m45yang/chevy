@@ -3,12 +3,10 @@
 var express    = require('express')
 var bodyParser = require('body-parser')
 var Promise    = require('bluebird')
-var mongoose   = require('mongoose')
 var config     = require('./config')
 
-mongoose.connect('mongodb://localhost/chevy');
-
 var app = express()
+app.config = config
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -18,7 +16,11 @@ app.use(bodyParser.urlencoded({extended: false}))
 // Process application/json
 app.use(bodyParser.json())
 
-require('./routes')(app)
+require('./logger') (app)
+
+require('./routes') (app)
+
+require('./mongoose') (app)
 
 // Spin up the server
 app.listen(app.get('port'), function() {

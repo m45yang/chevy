@@ -3,7 +3,8 @@
  */
 
 var graph = require('fbgraph')
-var config = require('../../config.json');
+var config = require('../../config.json')
+var accessToken = require('../models/accessToken')
 
 module.exports = {
 
