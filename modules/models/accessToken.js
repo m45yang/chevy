@@ -10,6 +10,6 @@ var accessTokenSchema = new Schema({
   accessToken: String,
 }, { collection: 'accessTokens' });
 
-var accessToken = mongoose.model('metricCurrentSas', accessTokenSchema);
+var accessToken = mongoose.model('accessToken', accessTokenSchema);
 
 module.exports = accessToken;
