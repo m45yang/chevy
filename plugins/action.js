@@ -5,9 +5,9 @@ var graph       = require('fbgraph').setVersion('2.7')
 var natural     = require('natural')
 var _           = require('lodash')
 var accessToken = require('../models/accessToken');
-var dictionary  = require('../dictionary')
-var Util        = require('../utils')
-var config      = require('../../config')
+var dictionary  = require('./dictionary')
+var Util        = require('./utils')
+var config      = require('../config')
 
 var fbGroupId = config.fbGroupId
 var searchLimit = 50

@@ -3,9 +3,9 @@
 var request      = require('request-promise')
 var natural      = require('natural')
 var Promise      = require('bluebird')
-var conversation = require('./plugins/conversation')
-var search       = require('./plugins/search')
-var action       = require('./plugins/action')
+var conversation = require('./conversation')
+var search       = require('./search')
+var action       = require('./action')
 var config       = require('../config')
 
 class Chevy {

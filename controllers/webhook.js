@@ -2,8 +2,8 @@
  * Webhook methods controller
  */
 
-var Chevy = require('../chevy');
-var config = require('../../config.json');
+var Chevy = require('../plugins/chevy');
+var config = require('../config.json');
 
 module.exports = {
 

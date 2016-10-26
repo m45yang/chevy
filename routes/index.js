@@ -2,8 +2,8 @@
  * Route definitions for Chevy
  */
 
-var webhook = require('../modules/controllers/webhook');
-var auth = require('../modules/controllers/auth');
+var webhook = require('../controllers/webhook');
+var auth = require('../controllers/auth');
 
 module.exports = function(app) {
   // Index route
