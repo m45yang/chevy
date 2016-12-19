@@ -5,6 +5,7 @@
   "authUrl": "https://8be7db92.ngrok.io/auth/facebook",
   "fbGroupId": "372772186164295",
   "db": {
-    "host": "mongodb://localhost:27017/chevy"
+    "production": "mongodb://m45yang:3ey05hci20933@ds139438.mlab.com:39438/chevy",
+    "development": "mongodb://localhost:27017/chevy"
   }
 }

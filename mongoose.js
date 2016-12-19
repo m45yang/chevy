@@ -13,7 +13,7 @@ var initMongoose = function(app) {
   mongoose.Promise = Promise
 
   // Initialize connection to database
-  mongoose.connect(app.config.db.host)
+  mongoose.connect(app.config.db[process.env.NODE_ENV || 'development'])
   var db = mongoose.connection
 
   db.on('error', function () {
