@@ -21,7 +21,7 @@ module.exports = {
     if (!req.query.code) {
       var authUrl = graph.getOauthUrl({
         "client_id": config.clientId,
-        "redirect_uri": config.authUrl + '?sender=' + sender
+        "redirect_uri": config.authUrl[process.env.NODE_ENV] + '?sender=' + sender
       })
 
       if (!req.query.error) {
