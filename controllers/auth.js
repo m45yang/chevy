@@ -35,7 +35,7 @@ module.exports = {
     // Use provided code to get access token
     graph.authorize({
       "client_id": config.clientId,
-      "redirect_uri": config.authUrl + '?sender=' + sender,
+      "redirect_uri": config.authUrl[process.env.NODE_ENV] + '?sender=' + sender,
       "client_secret": config.clientSecretKey,
       "code": req.query.code
     }, function (err, response) {
