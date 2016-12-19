@@ -51,7 +51,7 @@ module.exports = {
         if (err.message === 'ACCESS_TOKEN_MISSING') {
           return Chevy.reply(sender, [
             { text: 'Please authorize Chevy to access the Waterloo Carpool page for you by clicking on this link!' },
-            { text: config.authUrl + '?sender=' + sender }
+            { text: config.authUrl[process.env.NODE_ENV || 'development'] + '?sender=' + sender }
           ])
         }
         else {
