@@ -1,7 +1,7 @@
 {
   "clientId": "1537474833227826",
   "clientSecretKey": "4ca1ac979d6ca3207a6e53e5dc5fea50",
-  "pageAccessToken": "EAAV2U0FJIDIBAFJ4RZANJuW9ILWY1z6cLZAR7NIue64LRxyNMYiVowrKm6xC4ZBzk6d3E2gH9Ca1ezf0ZCNUpMHaPFUfUv6d7uw0SmIQA56jSszf0fAIyZAVX5DqZBBRZAZBk9mKuwvhqVgz5Obs5gq7HzvkzcyVr0T6lSGsQSqSGwZDZD",
+  "pageAccessToken": "EAAV2U0FJIDIBAAsOMqeyD5hPWT4qhk0dik43TNFIrZBd8AFZA90ohE1pWzIkMG3zy2JZBgWT5ox5BSdC3MmN9u1WFkCX0mOwQHpynLND2Mr5PYPD4xHp0VdzbRNqqTTALaywc8ZAO8UQTKmxL1S3IdrAfNgGlTgitCMx6HQo7QZDZD",
   "authUrl": {
     "production": "https://chevy.herokuapp.com/auth/facebook",
     "development": "https://8be7db92.ngrok.io/auth/facebook"

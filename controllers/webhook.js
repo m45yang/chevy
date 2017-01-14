@@ -55,7 +55,6 @@ module.exports = {
           ])
         }
         else {
-          req.log.error('Unknown error')
           return Chevy.reply(sender, [{ text: 'Something went wrong, please contact a developer!' }])
         }
       })
