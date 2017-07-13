@@ -1,6 +1,9 @@
 {
   "name": "chevy",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.11.1"
+  },
   "description": "A messenger bot that helps you with your weekly budget.",
   "main": "app.js",
   "scripts": {
